@@ -1,11 +1,12 @@
 import 'dart:developer';
 
-import 'package:bloc_tiberiu/logic/cubit/internet_cubit.dart';
+import 'package:bloc_tiberiu/logic/internet/internet_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants/enums.dart';
-import '../../logic/cubit/counter_cubit.dart';
+import '../../logic/cubit/counter/counter_cubit.dart';
+import '../../logic/cubit/counter/counter_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -34,19 +35,39 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: widget.color,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: (() {
+              Navigator.of(context).pushNamed('/settings-page');
+            }),
+            icon: const Icon(
+              Icons.settings,
+            ),
+          )
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Builder(builder: (context) {
-              final counterState = context.watch<CounterCubit>();
-              final internetState = context.watch<InternetCubit>();
+              final counterBlocaValue = context.select(
+                (CounterCubit counterCubit) => counterCubit.state.counterValue,
+              );
               return Text(
-                'Counter : ${counterState.state} ' '\nInternet : ${internetState.state}',
-                style: Theme.of(context).textTheme.headline5,
+                '$counterBlocaValue',
+                style: Theme.of(context).textTheme.bodyText1,
               );
             }),
+
+            // Builder(builder: (context) {
+            //   final counterState = context.watch<CounterCubit>();
+            //   final internetState = context.watch<InternetCubit>();
+            //   return Text(
+            //     'Counter : ${counterState.state} ' '\nInternet : ${internetState.state}',
+            //     style: Theme.of(context).textTheme.headline5,
+            //   );
+            // }),
             BlocConsumer<InternetCubit, InternetState>(
               listener: (context, state) {
                 if (state is InternetConnected && state.connectionType == ConnectionType.wifi) {

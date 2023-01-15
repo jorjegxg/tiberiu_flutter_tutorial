@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bloc_tiberiu/logic/cubit/counter_cubit.dart';
-import 'package:bloc_tiberiu/logic/cubit/internet_cubit.dart';
+import 'package:bloc_tiberiu/logic/cubit/counter/counter_cubit.dart';
+import 'package:bloc_tiberiu/logic/cubit/counter/counter_state.dart';
+import 'package:bloc_tiberiu/logic/internet/internet_cubit.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
@@ -20,7 +21,7 @@ void main() {
     test('Initial value e 0', () {
       expect(
           counterCubit.state,
-          CounterState(
+          const CounterState(
             counterValue: 0,
             wasIncremented: false,
           ));
@@ -31,7 +32,7 @@ void main() {
       build: () => counterCubit,
       act: (cubit) => cubit.increment(),
       expect: () => [
-        CounterState(counterValue: 1, wasIncremented: true),
+        const CounterState(counterValue: 1, wasIncremented: true),
       ],
     );
 
@@ -40,7 +41,7 @@ void main() {
       build: () => counterCubit,
       act: (cubit) => cubit.decrement(),
       expect: () => [
-        CounterState(counterValue: -1, wasIncremented: false),
+        const CounterState(counterValue: -1, wasIncremented: false),
       ],
     );
   });

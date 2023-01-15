@@ -1,4 +1,5 @@
 import 'package:bloc_tiberiu/presentation/screens/home_screen.dart';
+import 'package:bloc_tiberiu/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/second_screen.dart';
@@ -20,6 +21,10 @@ class AppRouter {
             title: 'ThirdScreen',
             color: Colors.greenAccent,
           ),
+        );
+      case '/settings-page':
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(),
         );
       case '/':
       default:

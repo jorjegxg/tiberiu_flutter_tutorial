@@ -1,11 +1,21 @@
-import 'package:bloc_tiberiu/logic/cubit/counter_cubit.dart';
-import 'package:bloc_tiberiu/logic/cubit/internet_cubit.dart';
+import 'package:bloc_tiberiu/logic/cubit/counter/counter_cubit.dart';
+import 'package:bloc_tiberiu/logic/internet/internet_cubit.dart';
+import 'package:bloc_tiberiu/logic/settings/cubit/settings_cubit.dart';
+import 'package:bloc_tiberiu/logic/utility/app_bloc_observer.dart';
 import 'package:bloc_tiberiu/presentation/router/app_router.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+  Bloc.observer = AppBlocObserver();
   runApp(
     MyApp(
       appRouter: AppRouter(),
@@ -38,6 +48,9 @@ class MyApp extends StatelessWidget {
             internetCubit: context.read<InternetCubit>(),
           ),
         ),
+        BlocProvider<SettingsCubit>(
+          create: (context) => SettingsCubit(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -50,4 +63,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-  

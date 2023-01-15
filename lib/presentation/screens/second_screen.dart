@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../logic/cubit/counter_cubit.dart';
+import '../../logic/cubit/counter/counter_cubit.dart';
+import '../../logic/cubit/counter/counter_state.dart';
 
 class SecondScreen extends StatefulWidget {
   const SecondScreen({
